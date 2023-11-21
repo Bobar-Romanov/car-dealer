@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+
+</head>
+<body>
+<P th:if="${sqlError != null}"> <span th:text="${sqlError}" th:style="${'color: red;'}"></span></P>
+<form action="/registration" method="post" th:object="${RegForm}">
+    <div class="group">
+        <label for="login"><b>Логин</b></label>
+        <input placeholder="login" th:field="*{login}" name="login" id="login"  required>
+        <P th:if="${loginError != null}"> <span th:text="${loginError}" th:style="${'color: red;'}"></span></P>
+    </div>
+    <div class="group">
+        <label for="password"><b>Пароль</b></label>
+        <input type="password" maxlength="20" minlength="3" th:field="*{password}"  placeholder="password" name="password" id="password" required>
+        <P th:if="${passwordError != null}"> <span th:text="${passwordError}" th:style="${'color: red;'}"></span></P>
+    </div>
+    <div class="group">
+        <label for="fullName"><b>Ф.И.О.</b></label>
+        <input  th:field="*{fullName}"  name="password" id="fullName" placeholder="Ф.И.О." required>
+        <P th:if="${fullNameError != null}"> <span th:text="${fullNameError}" th:style="${'color: red;'}"></span></P>
+    </div>
+    <div class="group">
+        <label for="phone"><b>Номер телефона</b></label>
+        <input  th:field="*{phone}"  placeholder="Номер телефона" name="phone" id="phone" required>
+        <P th:if="${phoneError != null}"> <span th:text="${phoneError}" th:style="${'color: red;'}"></span></P>
+    </div>
+    <div class="group">
+        <button type="submit" class="registerbtn" id="regbutton">Регистрация</button>
+    </div>
+</form>
+</body>
+</html>

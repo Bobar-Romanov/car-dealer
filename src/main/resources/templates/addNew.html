@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<header>
+    <div th:insert = "headBar.html::head"></div>
+</header>
+<body>
+    <H2>Добавить новую марку</H2>
+        <form th:action="@{/cars/admin/add/brand}" method="post">
+            <label for="brname">Название:</label>
+            <input type="text" id="brname" name="name" required>
+            <button type="submit">Добавить марку</button>
+        </form>
+    <hr>
+    <H2>Добавить новую опцию</H2>
+    <form th:action="@{/cars/admin/add/option}" method="post">
+        <label for="opname">Название опции:</label>
+        <input type="text" id="opname" name="name" required>
+
+        <label for="price">Цена опции:</label>
+        <input type="number" id="price" name="price" required>
+
+        <button type="submit">Добавить опцию</button>
+    </form>
+    <div th:if="${(param.option != null) and (param.option[0] == 'error')}" >
+        <p>Неверный формат числа</p>
+    </div>
+    <hr>
+    <H2>Добавить новую модель</H2>
+    <form th:action="@{/cars/admin/add/model}" method="post">
+        <p th:if="${error != null}"> <span th:text="${error}"></span></p>
+        <p>
+        <label for="brand">Бренд:</label>
+        <select id="brand" name="brandId" required>
+             <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+        </select>
+        </p>
+        <p>
+        <label for="name">Название модели:</label>
+        <input type="text" id="name" name="name" th:value="${name ?: ''}" required>
+        </p>
+        <label for="description">Описание модели:</label>
+        <textarea id="description" name="description" th:value="${description ?: ''}" required></textarea>
+        <p>
+        <label for="mprice">Цена модели:</label>
+        <input type="number" id="mprice" name="price" required>
+        </p>
+        <p>
+        <label for="horsepower">Лошадиные силы:</label>
+        <input type="number" id="horsepower" name="horsepower" required>
+        </p>
+        <p>
+        <label for="wd">Тип привода:</label>
+        <select id="wd" name="wdId"  required>            <
+            <option th:each="wdType : ${wd}" th:value="${wdType.id}" th:text="${wdType.type}"></option>
+        </select>
+        </p>
+        <p>
+        <label for="box">Тип коробки передач:</label>
+        <select id="box" name="boxId" required>            <
+            <option th:each="boxType : ${box}" th:value="${boxType.id}" th:text="${boxType.type}"></option>
+        </select>
+        </p>
+        <button type="submit">Добавить модель</button>
+    </form>
+    <hr>
+</body>
+</html>

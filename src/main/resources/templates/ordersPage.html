@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<header>
+    <div th:insert = "headBar.html::head"></div>
+</header>
+    <body>
+        <P th:if="${Empty != null}"> <span th:text="${Empty}"></span></P>
+        <div th:each="order : ${orders}">
+            <div>
+                <h2 th:text="${order.name}"></h2>
+                <p th:text="${order.description}"></p>
+                <p th:text="'Мощность: '+ ${order.horsepower} + ' л.с.'"></p>
+                <p th:text="'Привод: ' + ${order.wdType}"></p>
+                <p th:text="'Кузов: ' +${order.boxType}"></p>
+                <p th:text="'Цвет: '+${order.color}"></p>
+                <p th:text="'Будет не раньше: '+ ${order.date}"></p>
+                <p th:text="'Итоговая цена: ' +${order.price} + ''" ></p>
+
+                <!-- Вывод опций для заказа -->
+                <ul th:if="${order.options != null}">
+                    <li>Доп. опции</li>
+                    <li th:each="option : ${order.options}" th:text="${option.name}"></li>
+                </ul>
+            </div>
+            <hr>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', calculateTotalPrice);
+            });
+        });
+    </script>
+</head>
+<header>
+    <div th:insert = "headBar.html::head"></div>
+</header>
+    <body>
+        <P th:text="${brand.name}"></P>
+        <hr>
+        <p th:text="${model.name}"></p>
+        <p th:text="${model.description}"></p>
+        <p th:text="'Цена от '+ ${model.price} + ' рублей'"></p>
+        <p th:text="'Мощность ' + ${model.horsepower} + ' л.с.'"></p>
+        <p th:text=" 'Тип привода: ' + ${model.wdType}"></p>
+        <p th:text=" 'Кузов: ' + ${model.boxType}"></p>
+        <hr>
+        <form th:action="@{'/cars/home/' + ${brand.id} + '/' + ${model.id}}" method="post">
+            <label for="color">Цвет:</label>
+            <select id="color" name="color">
+                <option th:each="color : ${colors}" th:value="${color.id}" th:text="${color.name}"></option>
+            </select>
+            <P>
+            <label>Доп. опции:</label>
+            <div th:each="option : ${options}" >
+                <input type="checkbox" th:id="${'option-' + option.id}" th:name="options" th:value="${option.id}">
+                <label th:for="${'option-' + option.id}" th:text="${option.name} + ' цена: '">
+                </label>
+                <span th:text ="${option.price}"></span>
+            </div>
+            </P>
+            <input type="hidden" id="hiddenTotalPrice" name="price" value="">
+            <p id="TotalPrice" th:text="${model.price}" th:name="price">
+            <p th:text="'Вы получите свой автомобиль после ' + ${date}">
+            </p>
+            <input type="submit" value="Выбрать" th:style="${'padding: 5px;'}" >
+        </form>
+        <script type="text/javascript" th:inline="javascript">
+
+           function calculateTotalPrice() {
+            var total = [[${model.price}]];
+            var checkboxes = document.querySelectorAll('input[id^="option"]:checked');
+            checkboxes.forEach(function (checkbox) {
+                var span = checkbox.parentNode.querySelector('span');
+                var price = parseFloat(span.textContent);
+                total += price;
+            });
+            document.getElementById('TotalPrice').textContent = 'Суммарная цена: ' + total.toFixed(2);
+            document.getElementById('hiddenTotalPrice').value = total;
+        }
+        </script>
+
+    </body>
+</html>

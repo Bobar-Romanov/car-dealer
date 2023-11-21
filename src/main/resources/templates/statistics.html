@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<header>
+    <div th:insert = "headBar.html::head"></div>
+</header>
+<body>
+<h2>Топ марок</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Количество заказов</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="brand : ${brands}">
+        <td th:text="${brand.getName()}"></td>
+        <td th:text="${brand.getCount()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Для моделей -->
+<h2>Топ 10 моделей</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Количество заказов</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="model : ${models}">
+        <td th:text="${model.getName()}"></td>
+        <td th:text="${model.getCount()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

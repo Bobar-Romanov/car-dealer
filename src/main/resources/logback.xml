@@ -1,0 +1,20 @@
+<configuration>
+
+    <!-- Appenders -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/mylog.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/mylog-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>60</maxHistory> <!-- Хранить логи за последние 30 дней -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger -->
+    <root level="warn">
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<header>
+    <div th:insert = "headBar.html::head"></div>
+</header>
+        <body>
+                <P th:text="${brand.name}"></P>
+                <form th:action="@{'/cars/admin/delete/brand/' + ${brand.id}}" method="post" sec:authorize="hasRole('ADMIN')">
+                    <button type="submit">Удалить</button>
+                </form>
+                <hr>
+                <P th:if="${Empty != null}"> <span th:text="${Empty}"></span></P>
+                <div th:each="model : ${models}" >
+                    <div th:style="${'margin: 0 0 0 10%; border: thick double #05014a; padding: 10px;'}">
+                        <p th:text="${model.name}"></p>
+                        <p th:text="${model.description}"></p>
+                        <p th:text="'Цена от '+ ${model.price}"></p>
+                        <p th:text="'Мощность ' + ${model.horsepower} + ' л.с.'"></p>
+                        <p th:text=" 'Тип привода: ' + ${model.wdType}"></p>
+                        <p th:text=" 'Кузов: ' + ${model.boxType}"></p>
+                        <a th:href="@{/cars/home/{brandId}/{modelId}(brandId=${brand.id}, modelId=${model.id})}">
+                            <button th:style="${'padding: 5px;'}">Хочу такую</button>
+                        </a>
+                        <form th:action="@{'/cars/admin/delete/model/' + ${model.id}}" method="post" sec:authorize="hasRole('ADMIN')">
+                            <button type="submit">Удалить модель</button>
+                        </form>
+                    </div>
+                </div>
+        </body>
+</html>
